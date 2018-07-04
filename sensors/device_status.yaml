@@ -1,0 +1,6 @@
+- platform: device_status
+  scan_interval: 10
+  devices:
+    internet_connection:
+       host: 8.8.8.8 8
+       name: "Internet Connection"

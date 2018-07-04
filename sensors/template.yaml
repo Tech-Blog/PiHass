@@ -1,0 +1,16 @@
+- platform: template
+  sensors:
+    run_speed_test_last_run:
+      value_template: "{{ as_timestamp(states.script.run_speed_test.attributes.last_triggered) | timestamp_custom('%Y-%m-%d %H:%M:%S') }}"
+
+
+- platform: template
+  sensors:
+    hline_1:
+      value_template: hline
+    hline_2:
+      value_template: hline
+    hline_3:
+      value_template: hline
+    hline_4:
+      value_template: hline

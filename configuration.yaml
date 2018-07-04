@@ -1,0 +1,150 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 32.1472
+  longitude: 34.8417
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 69
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Jerusalem
+  # Customization file
+  customize: !include customize.yaml
+  
+  customize_glob:
+    'sensor.device_status_*':
+       custom_ui_state_card: state-card-custom-ui
+       templates:
+         theme: "if (state == 'online') return 'info_green'; else return 'alert_red';"
+    'sensor.http_status_*':
+       custom_ui_state_card: state-card-custom-ui
+       templates:
+         theme: "if (state == 'up') return 'info_green'; else return 'alert_red';"
+    'sensor.hline_*':
+       custom_ui_state_card: state-card-hline
+       config:
+         width: 90 
+         height: 0 
+         backgroundcolor: white
+         bordertop: '1px solid black'
+    'sensor.*disk*':
+       icon: mdi:harddisk
+    'sensor.*cpu_system*':
+       entity_picture: /local/icons/cpu.png
+    'sensor.*ram*':
+       entity_picture: /local/icons/ram.png
+    'sensor.deluge*speed*':
+       icon: mdi:speedometer
+    'sensor*table*':
+       icon: mdi:database-search
+      
+
+
+# Show links to resources in log and frontend
+#introduction:
+
+customizer:
+  custom_ui: local
+
+# Enables the frontend
+frontend:
+  extra_html_url:
+    - /local/custom_ui/state-card-hline.html
+    - /local/custom_ui/state-card-iframe.html
+    - /local/custom_ui/custom-weather-card.html
+    - /local/custom_ui/state-card-tiles.html
+    - /local/custom_ui/state-card-custom-ui.html
+    - /local/custom_ui/state-card-tiles.html
+    - /local/custom_ui/state-card-mini-media-player.html
+    - /local/custom_ui/state-card-text.html
+    
+  extra_html_url_es5:
+    - /local/custom_ui/state-card-hline_es5.html
+    - /local/custom_ui/custom-weather-card.html
+    - /local/custom_ui/state-card-tiles_es5.html
+    - /local/custom_ui/state-card-custom-ui-es5.html
+    - /local/custom_ui/state-card-tiles_es5.html
+    - /local/custom_ui/state-card-mini-media-player_es5.html
+    - /local/custom_ui/state-card-text.html
+    
+  themes: !include frontend_themes.yaml
+  
+  
+  
+    
+    
+
+
+# Enables configuration UI
+config:
+mqtt:
+
+python_script:
+
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+recorder:
+  db_url: mysql://hassuser:hasspass@localhost/hass_db
+
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+#sun:
+
+
+sensor: !include_dir_merge_list sensors
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+input_number:
+  daystokeep:
+    name: Number Of Days
+    initial: 10
+    min: 1
+    max: 60
+
+input_boolean:
+  speedtest:
+  
+  dbpurge:
+    
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+#zone: !include zones.yaml
+shell_command: !include shell_command.yaml

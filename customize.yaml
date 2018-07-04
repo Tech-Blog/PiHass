@@ -1,0 +1,75 @@
+
+#    entity_picture: /local/restart.png
+    
+sensor.speedtest_download:
+    friendly_name: Download Speed
+    icon: mdi:cloud-download
+
+sensor.speedtest_upload:
+    friendly_name: Upload Speed
+    icon: mdi:cloud-upload
+
+sensor.speedtest_ping:
+    friendly_name: Ping
+    icon: mdi:speedometer
+    
+
+sensor.since_last_boot:
+    friendly_name: Last Reboot
+    icon: mdi:update
+    
+sensor.device_status_internet_connection:
+     custom_ui_state_card: state-card-custom-ui
+     templates:
+       theme: "if (state == 'online') return 'info_green'; else return 'alert_red';"
+       
+       
+input_boolean.dbpurge:
+  custom_ui_state_card: state-card-tiles
+  config:
+    columns: 8
+    row_height: 50px
+    column_width: 50px
+    entities:
+     - entity: script.purge_db
+       icon: mdi:delete-variant
+       column_span: 4
+       column: 3
+ 
+input_boolean.speedtest:
+  custom_ui_state_card: state-card-tiles
+  config:
+    columns: 8
+    row_height: 50px
+    column_width: 50px
+    entities:
+     - entity: script.run_speed_test
+       icon: mdi:play-speed
+       column_span: 4
+       column: 3
+
+script.run_speed_test:
+  hidden: true
+
+script.purge_db:
+  hidden: true
+  
+script.update_os:
+  icon: mdi:linux
+
+script.update_hass:
+  icon: mdi:home-assistant  
+
+script.restart_home_assistant:
+    friendly_name: Restart Hass
+    icon: mdi:restart
+   
+script.update_all:
+    icon: mdi:progress-upload
+
+script.reboot_os:
+    icon: mdi:restart
+
+sensor.run_speed_test_last_run:
+  friendly_name: Last Run
+  icon: mdi:timer

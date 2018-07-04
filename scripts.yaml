@@ -1,0 +1,44 @@
+restart_home_assistant:
+  alias: Restart Home Assistant
+  sequence:
+    - alias: Restart Home Assistant
+      service: homeassistant.restart
+      
+update_hass:
+   alias: 'Update HASS and restart'
+   sequence:
+     - service: shell_command.hass_update
+     - service: homeassistant.restart
+
+update_os:
+   alias: 'Update Raspbian only and reboot'
+   sequence:
+     - service: shell_command.os_update
+     - service: shell_command.os_reboot
+
+reboot_os:
+   alias: 'Restart the server'
+   sequence:
+     - service: shell_command.os_reboot
+
+update_all:
+   alias: 'Update OS and HASS then reboot'
+   sequence:
+     - service: shell_command.os_update    
+     - service: shell_command.hass_update    
+     - service: shell_command.os_reboot
+     
+     
+purge_db:
+   alias: 'Purge Home Assistant Database'
+   sequence:
+     - service: recorder.purge
+       data_template: 
+         keep_days : >
+          {{ states.input_number.daystokeep.state | int }}
+ 
+run_speed_test:
+  alias: Run Speed Test
+  sequence:
+    - service: sensor.update_speedtest
+

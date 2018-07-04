@@ -1,0 +1,25 @@
+  - platform: sql
+    db_url: mysql://hassuser:hasspass@localhost/hass_db
+    queries:
+      - name: states table size
+        query: 'SELECT  round(((data_length + index_length) / 1024 / 1024), 2) as size FROM information_schema.TABLES WHERE table_schema = "hass_db" and table_name="states"'
+        column: 'size'
+        unit_of_measurement: MB
+      - name: schema_changes table size
+        query: 'SELECT  round(((data_length + index_length) / 1024 / 1024), 2) as size FROM information_schema.TABLES WHERE table_schema = "hass_db" and table_name="schema_changes"'
+        column: 'size'
+        unit_of_measurement: MB
+      - name: recorder_runs table size
+        query: 'SELECT  round(((data_length + index_length) / 1024 / 1024), 2) as size FROM information_schema.TABLES WHERE table_schema = "hass_db" and table_name="recorder_runs"'
+        column: 'size'
+        unit_of_measurement: MB
+      - name: events table size
+        query: 'SELECT  round(((data_length + index_length) / 1024 / 1024), 2) as size FROM information_schema.TABLES WHERE table_schema = "hass_db" and table_name="events"'
+        column: 'size'
+        unit_of_measurement: MB
+      - name: full db size
+        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1024 /1024, 2) "value" FROM information_schema.tables WHERE table_schema="hass_db" GROUP BY table_schema;'
+        column: 'value'
+        unit_of_measurement: MB
+       
+
